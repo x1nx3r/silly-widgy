@@ -1,5 +1,8 @@
 import '@fontsource/iosevka-aile'
 import { useEffect } from 'react'
+import { FaCheck } from 'react-icons/fa6'
+import { FaArrowRight } from 'react-icons/fa6'
+import { BsThreeDots } from 'react-icons/bs'
 
 function App() {
   useEffect(() => {
@@ -14,11 +17,18 @@ function App() {
   }
 
   return (
-    <div className="font-display flex flex-col bg-macchiato-mantle w-full h-screen overflow-hidden">
+    <div className="font-display flex flex-row bg-macchiato-mantle w-full h-screen overflow-hidden">
       <div className="relative flex flex-1 items-center justify-center">
-        <p className="absolute left-0 px-3 text-xl text-blue-600">Hello this is the left one</p>
-        <p className="absolute right-0 px-3 text-xl text-blue-600">Hello this is the right</p>
-        <p className="text-xl text-blue-600">Hello World</p>
+        <p className="absolute left-0 px-3 text-xl text-blue-600"></p>
+        <div className="absolute right-0 px-3 text-xl text-blue-600">
+          <BsThreeDots />
+        </div>
+
+        <div className="flex flex-row text-xl text-blue-600 items-center justify-center">
+          <FaCheck className="mx-1" />
+          <p className="mx-1">Current Task: Finish This One</p>
+          <FaArrowRight className="mx-1" />
+        </div>
       </div>
     </div>
   )

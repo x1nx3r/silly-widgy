@@ -14,7 +14,7 @@ app.whenReady().then(() => {
 
   // Calculate the desired position to anchor the window at the bottom
   const mainWindowX = Math.floor((screenWidth - mainWindowWidth) / 2) // Center horizontally
-  const mainWindowY = screenHeight - 20 // Align to bottom
+  const mainWindowY = screenHeight - 10 // Align to bottom
 
   mainWindow = new BrowserWindow({
     width: mainWindowWidth,
