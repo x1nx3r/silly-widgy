@@ -14,15 +14,11 @@ function App() {
   }
 
   return (
-    <div className="font-display flex flex-col bg-macchiato-mantle w-full min-h-screen overflow-auto">
-      <div className="flex flex-col m-auto p-3 shadow-md items-center justify-center">
-        <p className="p-2 text-3xl text-blue-600">Hello World</p>
-        <button
-          onClick={openSettings}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded shadow-md hover:bg-blue-600 transition"
-        >
-          Open Settings
-        </button>
+    <div className="font-display flex flex-col bg-macchiato-mantle w-full h-screen overflow-hidden">
+      <div className="flex flex-1 items-center justify-center">
+        <p className="mr-auto ml-0 px-2 text-xl text-blue-600">Hello this is the left one</p>
+        <p className="mx-auto text-xl text-blue-600">Hello World</p>
+        <p className="ml-auto mr-0 px-2 text-xl text-blue-600">Hello this is the right one</p>
       </div>
     </div>
   )
