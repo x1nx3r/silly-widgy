@@ -2,33 +2,11 @@
 
 An Electron application with React
 
-## Recommended IDE Setup
+## Development Roadmap
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Project Setup
-
-### Install
-
-```bash
-$ pnpm install
-```
-
-### Development
-
-```bash
-$ pnpm dev
-```
-
-### Build
-
-```bash
-# For windows
-$ pnpm build:win
-
-# For macOS
-$ pnpm build:mac
-
-# For Linux
-$ pnpm build:linux
-```
+- scaffold the project with react ✅
+- add tailwind support ✅
+- add mutli window support with react-router ✅
+- build the UI (you are here)
+- add parsing for tasks from a markdown file
+- modify the settings page to be a live-markdown editor to write and track tasks on
