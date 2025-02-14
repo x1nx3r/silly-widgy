@@ -25,10 +25,18 @@ app.whenReady().then(() => {
     frame: false,
     alwaysOnTop: true,
     autoHideMenuBar: true,
+    transparent: true,
+    backgroundColor: '#00000000',
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       sandbox: false
     }
+  })
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+    // Make the transparent parts of the window click-through
+    mainWindow.setIgnoreMouseEvents(true, { forward: true })
   })
 
   // Load main React app

@@ -15,10 +15,10 @@ function App() {
 
   return (
     <div className="font-display flex flex-col bg-macchiato-mantle w-full h-screen overflow-hidden">
-      <div className="flex flex-1 items-center justify-center">
-        <p className="mr-auto ml-0 px-2 text-xl text-blue-600">Hello this is the left one</p>
-        <p className="mx-auto text-xl text-blue-600">Hello World</p>
-        <p className="ml-auto mr-0 px-2 text-xl text-blue-600">Hello this is the right one</p>
+      <div className="relative flex flex-1 items-center justify-center">
+        <p className="absolute left-0 px-3 text-xl text-blue-600">Hello this is the left one</p>
+        <p className="absolute right-0 px-3 text-xl text-blue-600">Hello this is the right</p>
+        <p className="text-xl text-blue-600">Hello World</p>
       </div>
     </div>
   )
