@@ -14,6 +14,12 @@ importers:
       '@electron-toolkit/utils':
         specifier: ^3.0.0
         version: 3.0.0(electron@31.7.7)
+      '@fontsource/iosevka':
+        specifier: ^5.1.0
+        version: 5.1.0
+      '@fontsource/iosevka-aile':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@tailwindcss/vite':
         specifier: ^4.0.6
         version: 4.0.6(vite@5.4.14(@types/node@22.13.4)(lightningcss@1.29.1))
@@ -354,6 +360,12 @@ packages:
   '@eslint/js@8.57.1':
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@fontsource/iosevka-aile@5.1.0':
+    resolution: {integrity: sha512-gAdak8u5PIrZkE+s62tfm1tEHSusjdB4lEdGRToyVyEGqc1RZD+XmdTu5c4eH/P0JzPKf0+ooyoVifVyIZkhGw==}
+
+  '@fontsource/iosevka@5.1.0':
+    resolution: {integrity: sha512-wfo4Tzbb3Lz3Zf+UMF5c/bEQL5enPJ7LT83q/UQxbgXtg+BtleIETkziIwP8lZsw8MwhSou8HVCmSZnY0sfiCw==}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -2718,6 +2730,10 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.1': {}
+
+  '@fontsource/iosevka-aile@5.1.0': {}
+
+  '@fontsource/iosevka@5.1.0': {}
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
