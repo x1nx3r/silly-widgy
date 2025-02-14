@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, screen } = require('electron')
+const { app, BrowserWindow, ipcMain, screen, globalShortcut } = require('electron')
 const path = require('path')
 
 let mainWindow
@@ -45,6 +45,15 @@ app.whenReady().then(() => {
   } else {
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   }
+
+  // Register global shortcuts
+  globalShortcut.register('Alt+Shift+Right', () => {
+    mainWindow.webContents.send('next-task')
+  })
+
+  globalShortcut.register('Alt+Shift+S', () => {
+    mainWindow.webContents.send('open-settings')
+  })
 })
 
 // Handle IPC event to open settings window
@@ -94,6 +103,11 @@ ipcMain.on('open-settings', () => {
   settingsWindow.on('closed', () => {
     settingsWindow = null // Cleanup
   })
+})
+
+// Unregister all shortcuts when the app quits
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
