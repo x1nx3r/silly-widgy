@@ -16,6 +16,17 @@ export default defineConfig({
         '@renderer': resolve('src/renderer/src')
       }
     },
-    plugins: [react(), tailwindcss()]
+    plugins: [react(), tailwindcss()],
+    build: {
+      rollupOptions: {
+        input: {
+          main: resolve('src/renderer/index.html'), // Main window
+          settings: resolve('src/renderer/settings.html') // Settings window
+        },
+        output: {
+          entryFileNames: '[name].bundle.js' // Generates main.bundle.js and settings.bundle.js
+        }
+      }
+    }
   }
 })

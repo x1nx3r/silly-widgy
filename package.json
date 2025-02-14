@@ -23,6 +23,7 @@
     "@fontsource/iosevka": "^5.1.0",
     "@fontsource/iosevka-aile": "^5.1.0",
     "@tailwindcss/vite": "^4.0.6",
+    "react-router-dom": "^7.1.5",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {
