@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "An Electron application with React",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "x1nx3r",
+  "homepage": "-",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -23,8 +23,12 @@
     "@fontsource/iosevka": "^5.1.0",
     "@fontsource/iosevka-aile": "^5.1.0",
     "@tailwindcss/vite": "^4.0.6",
+    "easymde": "^2.18.0",
+    "font-awesome": "^4.7.0",
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.5",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {
