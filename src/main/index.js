@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, screen, globalShortcut } = require('electron')
+const fs = require('fs')
 const path = require('path')
 
 let mainWindow
@@ -56,6 +57,13 @@ app.whenReady().then(() => {
   })
 })
 
+// Handle IPC event to save markdown content
+ipcMain.handle('save-markdown', async (event, markdownContent) => {
+  const filePath = path.join(app.getAppPath(), 'settings.md')
+  fs.writeFileSync(filePath, markdownContent, 'utf-8')
+  return { success: true, filePath }
+})
+
 // Handle IPC event to open settings window
 ipcMain.on('open-settings', () => {
   if (settingsWindow) {
@@ -68,7 +76,7 @@ ipcMain.on('open-settings', () => {
 
   // Calculate the desired width and height as a percentage of the screen size
   const settingsWindowWidth = Math.floor(screenWidth * 0.5) // 50% of screen width
-  const settingsWindowHeight = Math.floor(screenHeight * 0.5) // 50% of screen height
+  const settingsWindowHeight = Math.floor(screenHeight * 0.75) // 50% of screen height
 
   // Calculate the desired position to anchor the window at the bottom
   const settingsWindowX = Math.floor((screenWidth - settingsWindowWidth) / 2) // Center horizontally

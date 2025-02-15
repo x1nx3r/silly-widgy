@@ -51,11 +51,19 @@ function SettingsPage() {
     }
   }, [])
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editor) {
       const newMarkdown = editor.value()
       setMarkdownContent(newMarkdown)
       console.log('Saved markdown content:', newMarkdown)
+
+      // Send the markdown content to the main process to save it
+      const result = await window.electron.ipcRenderer.invoke('save-markdown', newMarkdown)
+      if (result.success) {
+        console.log('Markdown content saved to:', result.filePath)
+      } else {
+        console.error('Failed to save markdown content')
+      }
     }
   }
 
