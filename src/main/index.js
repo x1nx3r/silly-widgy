@@ -6,6 +6,15 @@ let mainWindow
 let settingsWindow
 
 app.whenReady().then(() => {
+  // Check if settings.md exists in the root directory
+  const settingsFilePath = path.join(app.getAppPath(), 'settings.md')
+  if (!fs.existsSync(settingsFilePath)) {
+    // Create settings.md with a template if it doesn't exist
+    const templateContent =
+      '# Settings\n\nThis is the settings file. You can customize your settings here.'
+    fs.writeFileSync(settingsFilePath, templateContent, 'utf-8')
+  }
+
   // Get the primary display's dimensions
   const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize
 
@@ -64,6 +73,17 @@ ipcMain.handle('save-markdown', async (event, markdownContent) => {
   return { success: true, filePath }
 })
 
+// Handle IPC event to load markdown content
+ipcMain.handle('load-markdown', async () => {
+  const filePath = path.join(app.getAppPath(), 'settings.md')
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8')
+    return { success: true, content }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
 // Handle IPC event to open settings window
 ipcMain.on('open-settings', () => {
   if (settingsWindow) {
@@ -76,7 +96,7 @@ ipcMain.on('open-settings', () => {
 
   // Calculate the desired width and height as a percentage of the screen size
   const settingsWindowWidth = Math.floor(screenWidth * 0.5) // 50% of screen width
-  const settingsWindowHeight = Math.floor(screenHeight * 0.75) // 50% of screen height
+  const settingsWindowHeight = Math.floor(screenHeight * 0.8) // 50% of screen height
 
   // Calculate the desired position to anchor the window at the bottom
   const settingsWindowX = Math.floor((screenWidth - settingsWindowWidth) / 2) // Center horizontally

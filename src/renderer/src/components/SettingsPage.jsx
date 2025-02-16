@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import EasyMDE from 'easyMDE'
 import 'easymde/dist/easymde.min.css' // Import the EasyMDE CSS
 import 'font-awesome/css/font-awesome.min.css'
+import ReactMarkdown from 'react-markdown'
 
 function SettingsPage() {
   const [markdownContent, setMarkdownContent] = useState('')
@@ -9,6 +10,18 @@ function SettingsPage() {
   const [editor, setEditor] = useState(null)
 
   useEffect(() => {
+    // Load the content of settings.md
+    const loadSettings = async () => {
+      const result = await window.electron.ipcRenderer.invoke('load-markdown')
+      if (result.success) {
+        setMarkdownContent(result.content)
+      } else {
+        console.error('Failed to load markdown content')
+      }
+    }
+
+    loadSettings()
+
     // Initialize EasyMDE editor
     const easyMDE = new EasyMDE({
       element: editorRef.current,
@@ -72,9 +85,16 @@ function SettingsPage() {
       <h2 className="text-3xl font-semibold mb-4">Settings</h2>
       <p className="mb-6">Modify your application preferences in markdown format.</p>
 
-      {/* EasyMDE Editor */}
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <textarea ref={editorRef} />
+      <div className="flex">
+        {/* EasyMDE Editor */}
+        <div className="w-1/2 bg-white p-4 rounded-lg shadow-md mr-4">
+          <textarea ref={editorRef} />
+        </div>
+
+        {/* Markdown Viewer */}
+        <div className="w-1/2 bg-white p-4 rounded-lg shadow-md">
+          <ReactMarkdown>{markdownContent}</ReactMarkdown>
+        </div>
       </div>
 
       <div className="mt-4">
