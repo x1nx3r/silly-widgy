@@ -44,16 +44,9 @@ function App() {
   return (
     <div className="font-display flex flex-row bg-macchiato-mantle w-full h-screen overflow-hidden">
       <div className="relative flex flex-1 items-center justify-center">
-        <div className="absolute right-0 px-3 text-xl text-blue-600">
-          <button onClick={handleOpenSettings} className="focus:outline-none">
-            <BsThreeDots />
-          </button>
-        </div>
+        <div className="absolute right-0 px-3 text-xl text-blue-600"></div>
 
-        <div className="flex flex-row text-xl text-blue-600">
-          <button onClick={handleNextTask} className="focus:outline-none mr-2">
-            <FaCheck />
-          </button>
+        <div className="flex flex-row text-xl text-white">
           <p className="mx-1">Current Task: {tasks[currentTaskIndex]}</p>
           <button onClick={handleNextTask} className="focus:outline-none ml-2">
             <FaArrowRight />
