@@ -70,9 +70,20 @@ app.whenReady().then(() => {
 ipcMain.handle('save-markdown', async (event, markdownContent) => {
   const filePath = path.join(app.getAppPath(), 'settings.md')
   fs.writeFileSync(filePath, markdownContent, 'utf-8')
-  return { success: true, filePath }
-})
 
+  // Parse tasks from markdown content
+  const taskRegex = /^- (.+)$/gm
+  const tasks = []
+  let match
+  while ((match = taskRegex.exec(markdownContent)) !== null) {
+    tasks.push(match[1])
+  }
+
+  // Send tasks to renderer process
+  mainWindow.webContents.send('tasks-updated', tasks)
+
+  return { success: true, filePath, tasks }
+})
 // Handle IPC event to load markdown content
 ipcMain.handle('load-markdown', async () => {
   const filePath = path.join(app.getAppPath(), 'settings.md')
