@@ -61,9 +61,17 @@ npm run dev
 
 ### Building
 
+For now only Windows build are tested. So if you're on Linux/Mac do so on your own risk
+
 ```bash
-# Build for production
-npm run build
+# Build for Windows
+npm run build:win
+
+# Build for Linux
+npm run build:linux
+
+# Build for Mac
+npm run build:mac
 ```
 
 ## 🎨 Customization
