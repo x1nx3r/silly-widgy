@@ -4,7 +4,15 @@ import { electronAPI } from '@electron-toolkit/preload'
 // Custom APIs for renderer
 const api = {
   send: (channel, data) => ipcRenderer.send(channel, data),
-  on: (channel, callback) => ipcRenderer.on(channel, (event, ...args) => callback(...args))
+  on: (channel, callback) => ipcRenderer.on(channel, (event, ...args) => callback(...args)),
+  // Add task management APIs
+  getTasks: () => ipcRenderer.invoke('get-tasks'),
+  updateTasks: (tasks) => ipcRenderer.invoke('update-tasks', tasks),
+  addTask: (task) => ipcRenderer.invoke('add-task', task),
+  removeTask: (index) => ipcRenderer.invoke('remove-task', index),
+  editTask: (data) => ipcRenderer.invoke('edit-task', data),
+  onTasksUpdated: (callback) =>
+    ipcRenderer.on('tasks-updated', (event, ...args) => callback(...args))
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -1,31 +1,28 @@
 const { app, BrowserWindow, ipcMain, screen, globalShortcut } = require('electron')
-const fs = require('fs')
 const path = require('path')
 
 let mainWindow
 let settingsWindow
+// Initialize tasks array
+let tasksArray = [
+  'Welcome to Silly-Widgy!',
+  'Open settings with Alt+Shift+S',
+  'Navigate tasks with Alt+Shift+Right'
+]
 
 app.whenReady().then(() => {
-  // Check if settings.md exists in the root directory
-  const settingsFilePath = path.join(app.getAppPath(), 'settings.md')
-  if (!fs.existsSync(settingsFilePath)) {
-    // Create settings.md with a template if it doesn't exist
-    const templateContent =
-      '# Settings\n\nThis is the settings file. You can customize your settings here.'
-    fs.writeFileSync(settingsFilePath, templateContent, 'utf-8')
-  }
-
   // Get the primary display's dimensions
   const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize
 
   // Calculate the desired width and height as a percentage of the screen size
-  const mainWindowWidth = Math.floor(screenWidth * 0.98) // 98% of screen width, 1568 pixels if 1600x900
-  const mainWindowHeight = Math.floor(screenHeight * 0.05) // 5% of screen height, 45 pixels if 1600x900
+  const mainWindowWidth = Math.floor(screenWidth * 0.98)
+  const mainWindowHeight = Math.floor(screenHeight * 0.05)
 
-  // Calculate the desired position to anchor the window at the bottom
-  const mainWindowX = Math.floor((screenWidth - mainWindowWidth) / 2) // Center horizontally
-  const mainWindowY = screenHeight - 10 // Align to bottom
+  // Calculate the desired position
+  const mainWindowX = Math.floor((screenWidth - mainWindowWidth) / 2)
+  const mainWindowY = screenHeight - 10
 
+  // Create the main window
   mainWindow = new BrowserWindow({
     width: mainWindowWidth,
     height: mainWindowHeight,
@@ -43,10 +40,12 @@ app.whenReady().then(() => {
     }
   })
 
+  // Now that mainWindow exists, we can set up its events
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
-    // Make the transparent parts of the window click-through
     mainWindow.setIgnoreMouseEvents(true, { forward: true })
+    // Send initial tasks
+    mainWindow.webContents.send('tasks-updated', tasksArray)
   })
 
   // Load main React app
@@ -66,30 +65,50 @@ app.whenReady().then(() => {
   })
 })
 
-// Handle IPC event to save markdown content
-ipcMain.handle('save-markdown', async (event, markdownContent) => {
-  const filePath = path.join(app.getAppPath(), 'settings.md')
-  fs.writeFileSync(filePath, markdownContent, 'utf-8')
-
-  // Parse tasks from markdown content
-  const taskRegex = /^- (.+)$/gm
-  const tasks = []
-  let match
-  while ((match = taskRegex.exec(markdownContent)) !== null) {
-    tasks.push(match[1])
-  }
-
-  // Send tasks to renderer process
-  mainWindow.webContents.send('tasks-updated', tasks)
-
-  return { success: true, filePath, tasks }
-})
-// Handle IPC event to load markdown content
-ipcMain.handle('load-markdown', async () => {
-  const filePath = path.join(app.getAppPath(), 'settings.md')
+// Add IPC handlers
+ipcMain.handle('get-tasks', async () => {
   try {
-    const content = fs.readFileSync(filePath, 'utf-8')
-    return { success: true, content }
+    return { success: true, tasks: tasksArray }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+ipcMain.handle('update-tasks', async (event, newTasks) => {
+  try {
+    tasksArray = newTasks
+    mainWindow.webContents.send('tasks-updated', tasksArray)
+    return { success: true, tasks: tasksArray }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+ipcMain.handle('add-task', async (event, task) => {
+  try {
+    tasksArray.push(task)
+    mainWindow.webContents.send('tasks-updated', tasksArray)
+    return { success: true, tasks: tasksArray }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+ipcMain.handle('remove-task', async (event, index) => {
+  try {
+    tasksArray.splice(index, 1)
+    mainWindow.webContents.send('tasks-updated', tasksArray)
+    return { success: true, tasks: tasksArray }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+ipcMain.handle('edit-task', async (event, { index, newText }) => {
+  try {
+    tasksArray[index] = newText
+    mainWindow.webContents.send('tasks-updated', tasksArray)
+    return { success: true, tasks: tasksArray }
   } catch (error) {
     return { success: false, error: error.message }
   }
